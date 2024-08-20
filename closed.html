@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1024">
+    <title>JABEEN's FOOD INVENTORY</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            overflow: hidden; /* Prevent scrolling to maintain video background */
+            color: #ecf0f1; /* Text color */
+            font-family: Arial, sans-serif; /* Font style */
+            text-align: center; /* Center text horizontally */
+        }
+
+        .video-background {
+            position: fixed; /* Fixed positioning to keep the video in place */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1; /* Ensure video is behind other content */
+            background: #000; /* Fallback background color */
+        }
+
+        .video-background video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover; /* Ensures video covers the area without distortion */
+        }
+
+        .container {
+            padding: 0px;
+            background-color: transparent;
+            margin-bottom: 60px;
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #ecf0f1;
+            padding: 20px;
+            text-align: center;
+            font-family: 'Garamond', serif;
+            font-size: 3em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+		
+		h1 {
+        font-size: 1.2em; /* Adjust the size to your preference */
+		color: #ecf0f1;
+        }
+
+        .logo {
+            max-width: 9.8%;
+            height: auto;
+			margin-right: 0.9%;
+        }
+
+        .message {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 0; /* Remove margin to position the message independently */
+            position: absolute; /* Position it absolutely to place it outside of the container */
+            top: 50%; /* Center vertically */
+            left: 50%; /* Center horizontally */
+            transform: translate(-50%, -50%); /* Adjust position to the center */
+            background: rgba(0, 0, 0, 0.7); /* Background color with opacity */
+            padding: 20px;
+            border-radius: 8px; /* Rounded corners */
+        }
+    </style>
+	
+	<script>
+    // Disable right-click
+    document.addEventListener('contextmenu', function(event) {
+        event.preventDefault();
+    });
+
+    // Disable common inspect element keyboard shortcuts
+    document.addEventListener('keydown', function(event) {
+        // F12 key
+        if (event.keyCode === 123) {
+            event.preventDefault();
+        }
+
+        // Ctrl+Shift+I
+        if (event.ctrlKey && event.shiftKey && event.keyCode === 73) {
+            event.preventDefault();
+        }
+
+        // Ctrl+Shift+J
+        if (event.ctrlKey && event.shiftKey && event.keyCode === 74) {
+            event.preventDefault();
+        }
+
+        // Ctrl+U
+        if (event.ctrlKey && event.keyCode === 85) {
+            event.preventDefault();
+        }
+
+        // Ctrl+Shift+C (DevTools element picker)
+        if (event.ctrlKey && event.shiftKey && event.keyCode === 67) {
+            event.preventDefault();
+        }
+    });
+</script>
+
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAMaG0L5atD6zICJ1T3Q34k23OopY7oPT8",
+            authDomain: "food-6005c.firebaseapp.com",
+            databaseURL: "https://food-6005c-default-rtdb.firebaseio.com",
+            projectId: "food-6005c",
+            storageBucket: "food-6005c.appspot.com",
+            messagingSenderId: "880486982907",
+            appId: "1:880486982907:web:c62ac301bad591a609fc5e",
+            measurementId: "G-8VNZWGEKLB"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // Function to check the status from Firebase and redirect accordingly
+        async function checkStatus() {
+            try {
+                const statusRef = ref(database, 'status');
+                const snapshot = await get(statusRef);
+                if (snapshot.exists()) {
+                    const status = snapshot.val();
+                    if (status === "open") {
+                        window.location.href = "home.html";
+                    }
+                } else {
+                    console.error("No status found in Firebase.");
+                }
+            } catch (error) {
+                console.error("Error fetching status from Firebase:", error);
+            }
+        }
+
+        // Call the checkStatus function when the page loads
+        document.addEventListener('DOMContentLoaded', checkStatus);
+
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey && event.altKey && event.code === 'KeyL') {
+                window.location.href = 'y4534ujtg45yhtt546jyty4567yewer576uty76475687yrt347r6786yr55utrhg56uht43t5er46t476jy4y676iyh.html';
+            }
+        });
+    </script>
+</head>
+<body>
+    <!-- Video Background -->
+    <div class="video-background">
+        <video autoplay muted loop>
+            <source src="steam.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <div class="container">
+        <header>
+            <!-- Add your logo here -->
+            <img src="newlogo.png" alt="Logo" class="logo">
+            <h1>JABEEN's FOOD INVENTORY</h1>
+        </header>
+    </div>
+
+    <!-- Message positioned independently of the container -->
+    <div class="message">
+        KITCHEN HAS BEEN CLOSED
+    </div>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1024">
+    <title>Password Protected Action</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            overflow: hidden; /* Prevent scrolling */
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+        }
+
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .video-background video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            color: #fff;
+            position: relative; /* Positioning context for absolute children */
+            max-width: 400px; /* Optional: to limit container width */
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input[type="password"] {
+            padding: 10px;
+            font-size: 1em;
+            margin-bottom: 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        #openButton {
+            background-color: #2ecc71; /* Green */
+            color: white;
+            border: none;
+        }
+
+        #closeButton {
+            background-color: #e74c3c; /* Red */
+            color: white;
+            border: none;
+        }
+
+        #exitButton {
+            background-color: #3498db; /* Blue */
+            color: white;
+            border: none;
+            position: absolute;
+            bottom: -50px; /* Distance from bottom of container */
+            left: 47.5%;
+            transform: translateX(-50%);
+        }
+    </style>
+    <script>
+        // Disable right-click
+        document.addEventListener('contextmenu', function(event) {
+            event.preventDefault();
+        });
+
+        // Disable common inspect element keyboard shortcuts
+        document.addEventListener('keydown', function(event) {
+            // F12 key
+            if (event.keyCode === 123) {
+                event.preventDefault();
+            }
+
+            // Ctrl+Shift+I
+            if (event.ctrlKey && event.shiftKey && event.keyCode === 73) {
+                event.preventDefault();
+            }
+
+            // Ctrl+Shift+J
+            if (event.ctrlKey && event.shiftKey && event.keyCode === 74) {
+                event.preventDefault();
+            }
+
+            // Ctrl+U
+            if (event.ctrlKey && event.keyCode === 85) {
+                event.preventDefault();
+            }
+
+            // Ctrl+Shift+C (DevTools element picker)
+            if (event.ctrlKey && event.shiftKey && event.keyCode === 67) {
+                event.preventDefault();
+            }
+        });
+    </script>
+
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+        import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-analytics.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAMaG0L5atD6zICJ1T3Q34k23OopY7oPT8",
+            authDomain: "food-6005c.firebaseapp.com",
+            databaseURL: "https://food-6005c-default-rtdb.firebaseio.com",
+            projectId: "food-6005c",
+            storageBucket: "food-6005c.appspot.com",
+            messagingSenderId: "880486982907",
+            appId: "1:880486982907:web:c62ac301bad591a609fc5e",
+            measurementId: "G-8VNZWGEKLB"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const analytics = getAnalytics(app);
+
+        window.checkPassword = async function() {
+            const password = document.getElementById('passwordInput').value;
+            if (password === 'Jackalr!4#') {
+                document.getElementById('actionButtons').style.display = 'block';
+
+                // Fetch and display the current status
+                const statusRef = ref(database, 'status');
+                const statusSnapshot = await get(statusRef);
+                if (statusSnapshot.exists()) {
+                    document.getElementById('statusMessage').innerText = 'Status: ' + statusSnapshot.val().toUpperCase();
+                } else {
+                    document.getElementById('statusMessage').innerText = 'Status: UNKNOWN';
+                }
+            } else {
+                alert('Incorrect Password');
+            }
+        }
+
+        window.setStatus = function(status) {
+            const statusRef = ref(database, 'status');
+            set(statusRef, status).then(() => {
+                if (status === 'open') {
+                    alert('Kitchen is OPENED');
+                } else if (status === 'close') {
+                    alert('Kitchen is CLOSED');
+                }
+                document.getElementById('statusMessage').innerText = 'Status: ' + status.toUpperCase();
+            }).catch((error) => {
+                console.error('Error updating status:', error);
+            });
+        }
+
+        window.exitPage = function() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</head>
+<body>
+    <!-- Video Background -->
+    <div class="video-background">
+        <video autoplay muted loop>
+            <source src="steam.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- Container for Password and Buttons -->
+    <div class="container">
+        <h2>Please Enter Password</h2>
+        <input type="password" id="passwordInput" placeholder="Enter password" />
+        <br />
+        <button onclick="checkPassword()">Submit</button>
+        <div id="actionButtons" style="display:none;">
+            <h3>Select what to do</h3>
+            <button id="openButton" onclick="setStatus('open')">OPEN KITCHEN</button>
+            <button id="closeButton" onclick="setStatus('close')">CLOSE KITCHEN</button>
+            <div id="statusMessage"></div> <!-- Status Message Display -->
+        </div>
+        <button id="exitButton" onclick="exitPage()">EXIT</button>
+    </div>
+</body>
+</html>
