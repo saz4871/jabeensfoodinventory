@@ -347,6 +347,7 @@ header, nav, .container, footer {
         <a href="#home">Home</a>
         <a href="#desi-menu">Desi Food</a>
         <a href="#fast-food">Fast Food</a>
+		<a href="#Beverages">Beverages</a>
         <a href="#order">Order</a>
         <a href="#contact">Contact</a>
     </nav>
@@ -370,16 +371,82 @@ header, nav, .container, footer {
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Biryani</td>
+                        <td>Chicken Biryani Single - (1/2 kilo)</td>
                         <td class="menu-item"><input type="number" value="1" id="quantity-biryani" min="1"></td>
-                        <td>PKR 500</td>
-                        <td><button onclick="addToOrder('Biryani', 500, document.getElementById('quantity-biryani').value)">Add to Order</button></td>
+                        <td>PKR 150/-</td>
+                        <td><button onclick="addToOrder('Chicken Biryani Single (1/2 kilo)', 150, document.getElementById('quantity-biryani').value)">Add to Order</button></td>
+                    </tr>
+					<tr>
+                        <td>Chicken Biryani Double - (1 kilo)</td>
+                        <td class="menu-item"><input type="number" value="1" id="quantity-biryani" min="1"></td>
+                        <td>PKR 300/-</td>
+                        <td><button onclick="addToOrder('Chicken Biryani Double (1 kilo)', 300, document.getElementById('quantity-biryani').value)">Add to Order</button></td>
+                    </tr>
+					<tr>
+                        <td>Beef Plao Single - (1/2 kilo)</td>
+                        <td class="menu-item"><input type="number" value="1" id="quantity-bps" min="1"></td>
+                        <td>PKR 200/-</td>
+                        <td><button onclick="addToOrder('Beef Plao Single (1/2 kilo)', 200, document.getElementById('quantity-bps').value)">Add to Order</button></td>
+                    </tr>
+					<tr>
+                        <td>Beef Plao Double - (1 kilo)</td>
+                        <td class="menu-item"><input type="number" value="1" id="quantity-bpd" min="1"></td>
+                        <td>PKR 420/-</td>
+                        <td><button onclick="addToOrder('Beef Plao Double (1 kilo)', 420, document.getElementById('quantity-bpd').value)">Add to Order</button></td>
                     </tr>
                     <tr>
-                        <td>Kebabs</td>
-                        <td class="menu-item"><input type="number" value="1" id="quantity-kebabs" min="1"></td>
-                        <td>PKR 300</td>
-                        <td><button onclick="addToOrder('Kebabs', 300, document.getElementById('quantity-kebabs').value)">Add to Order</button></td>
+                        <td>Chicken Behari Tikka - Chest</td>
+                        <td class="menu-item"><input type="number" value="1" id="quantity-cbtc" min="1"></td>
+                        <td>PKR 420/-</td>
+                        <td><button onclick="addToOrder('Chicken Behari Tikka Chest', 420, document.getElementById('quantity-cbtc').value)">Add to Order</button></td>
+                    </tr>
+					<tr>
+                        <td>Chicken Malai Tikka - Chest</td>
+                        <td class="menu-item"><input type="number" value="1" id="quantity-cmtc" min="1"></td>
+                        <td>PKR 420/-</td>
+                        <td><button onclick="addToOrder('Chicken Malai Tikka Chest', 420, document.getElementById('quantity-cmtc').value)">Add to Order</button></td>
+                    </tr>
+					<tr>
+                        <td>Chicken Tikka - Leg</td>
+                        <td class="menu-item"><input type="number" value="1" id="quantity-ctl" min="1"></td>
+                        <td>PKR 370/-</td>
+                        <td><button onclick="addToOrder('Chicken Tikka Leg', 370, document.getElementById('quantity-ctl').value)">Add to Order</button></td>
+                    </tr>
+					<tr>
+                        <td>Beef Shami Kebab - (6 PCS)</td>
+                        <td class="menu-item"><input type="number" value="1" id="quantity-bsk" min="1"></td>
+                        <td>PKR 370/-</td>
+                        <td><button onclick="addToOrder('Beef Shami Kebab (6 PCS)', 370, document.getElementById('quantity-bsk').value)">Add to Order</button></td>
+                    </tr>
+					<tr>
+                        <td>Beef Shami Kebab - (12 PCS)</td>
+                        <td class="menu-item"><input type="number" value="1" id="quantity-bsk" min="1"></td>
+                        <td>PKR 650/-</td>
+                        <td><button onclick="addToOrder('Beef Shami Kebab (12 PCS)', 650, document.getElementById('quantity-bsk').value)">Add to Order</button></td>
+                    </tr>
+					<tr>
+                        <td>Beef Boti Roll</td>
+                        <td class="menu-item"><input type="number" value="1" id="quantity-bbr" min="1"></td>
+                        <td>PKR 180/-</td>
+                        <td><button onclick="addToOrder('Beef Boti Roll', 180, document.getElementById('quantity-bbr').value)">Add to Order</button></td>
+                    </tr>
+					<tr>
+                        <td>Malai Boti Roll</td>
+                        <td class="menu-item"><input type="number" value="1" id="quantity-mbr" min="1"></td>
+                        <td>PKR 180/-</td>
+                        <td><button onclick="addToOrder('Malai Boti Roll', 180, document.getElementById('quantity-mbr').value)">Add to Order</button></td>
+                    </tr>
+					<tr>
+                        <td>Chicken Mayo Roll</td>
+                        <td class="menu-item"><input type="number" value="1" id="quantity-cmr" min="1"></td>
+                        <td>PKR 180/-</td>
+                        <td><button onclick="addToOrder('Chicken Mayo Roll', 180, document.getElementById('quantity-cmr').value)">Add to Order</button></td>
+                    </tr>
+					<tr>
+                        <td>Seekh Kebab Roll</td>
+                        <td class="menu-item"><input type="number" value="1" id="quantity-sk" min="1"></td>
+                        <td>PKR 170/-</td>
+                        <td><button onclick="addToOrder('Seekh Kebab Roll', 170, document.getElementById('quantity-sk').value)">Add to Order</button></td>
                     </tr>
                     <!-- Add more rows for additional desi food items -->
                 </tbody>
@@ -399,21 +466,122 @@ header, nav, .container, footer {
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Burger</td>
-                        <td class="menu-item"><input type="number" value="1" id="quantity-burger" min="1"></td>
-                        <td>PKR 400</td>
-                        <td><button onclick="addToOrder('Burger', 400, document.getElementById('quantity-burger').value)">Add to Order</button></td>
+                        <td>Zinger Burger</td>
+                        <td class="menu-item"><input type="number" value="1" id="quantity-zb" min="1"></td>
+                        <td>PKR 300/-</td>
+                        <td><button onclick="addToOrder('Burger', 300, document.getElementById('quantity-zb').value)">Add to Order</button></td>
+                    </tr>
+					<tr>
+                        <td>Double Zinger</td>
+                        <td class="menu-item"><input type="number" value="1" id="quantity-dz" min="1"></td>
+                        <td>PKR 470/-</td>
+                        <td><button onclick="addToOrder('Burger', 470, document.getElementById('quantity-dz').value)">Add to Order</button></td>
+                    </tr>
+					<tr>
+                        <td>Chicken Sandwich</td>
+                        <td class="menu-item"><input type="number" value="1" id="quantity-cs" min="1"></td>
+                        <td>PKR 300/-</td>
+                        <td><button onclick="addToOrder('Chicken Sandwich', 300, document.getElementById('quantity-cs').value)">Add to Order</button></td>
+                    </tr>
+					<tr>
+                        <td>Club Sandwich</td>
+                        <td class="menu-item"><input type="number" value="1" id="quantity-cls" min="1"></td>
+                        <td>PKR 320/-</td>
+                        <td><button onclick="addToOrder('Club Sandwich', 320, document.getElementById('quantity-cls').value)">Add to Order</button></td>
+                    </tr>
+					<tr>
+                        <td>Broast Chest Piece</td>
+                        <td class="menu-item"><input type="number" value="1" id="quantity-bcp" min="1"></td>
+                        <td>PKR 450/-</td>
+                        <td><button onclick="addToOrder('Broast Chest Piece', 450, document.getElementById('quantity-bcp').value)">Add to Order</button></td>
+                    </tr>
+					<tr>
+                        <td>Broast Leg Piece</td>
+                        <td class="menu-item"><input type="number" value="1" id="quantity-blp" min="1"></td>
+                        <td>PKR 400/-</td>
+                        <td><button onclick="addToOrder('Broast Leg Piece', 450, document.getElementById('quantity-blp').value)">Add to Order</button></td>
+                    </tr>
+					<tr>
+                        <td>Zingeratha</td>
+                        <td class="menu-item"><input type="number" value="1" id="quantity-zingeratha" min="1"></td>
+                        <td>PKR 220/-</td>
+                        <td><button onclick="addToOrder('Zingeratha', 220, document.getElementById('quantity-zingeratha').value)">Add to Order</button></td>
+                    </tr>
+					<tr>
+                        <td>Nuggets - (6 PCS)</td>
+                        <td class="menu-item"><input type="number" value="1" id="quantity-nuggets6" min="1"></td>
+                        <td>PKR 300/-</td>
+                        <td><button onclick="addToOrder('Nuggets (6 PCS)', 300, document.getElementById('quantity-nuggets6').value)">Add to Order</button></td>
+                    </tr>
+					<tr>
+                        <td>Nuggets - (12 PCS)</td>
+                        <td class="menu-item"><input type="number" value="1" id="quantity-nuggets12" min="1"></td>
+                        <td>PKR 550/-</td>
+                        <td><button onclick="addToOrder('Nuggets (12 PCS)', 300, document.getElementById('quantity-nuggets12').value)">Add to Order</button></td>
                     </tr>
                     <tr>
                         <td>Fries</td>
                         <td class="menu-item"><input type="number" value="1" id="quantity-fries" min="1"></td>
-                        <td>PKR 200</td>
-                        <td><button onclick="addToOrder('Fries', 200, document.getElementById('quantity-fries').value)">Add to Order</button></td>
+                        <td>PKR 100/-</td>
+                        <td><button onclick="addToOrder('Fries', 100, document.getElementById('quantity-fries').value)">Add to Order</button></td>
+                    </tr>
+					<tr>
+                        <td>Mayo Fries</td>
+                        <td class="menu-item"><input type="number" value="1" id="quantity-mfries" min="1"></td>
+                        <td>PKR 120/-</td>
+                        <td><button onclick="addToOrder('Mayo Fries', 120, document.getElementById('quantity-mfries').value)">Add to Order</button></td>
+                    </tr>
+					<tr>
+                        <td>Pizza Fries - Small</td>
+                        <td class="menu-item"><input type="number" value="1" id="quantity-pfs" min="1"></td>
+                        <td>PKR 370/-</td>
+                        <td><button onclick="addToOrder('Pizza Fries - Small', 370, document.getElementById('quantity-pfs').value)">Add to Order</button></td>
+                    </tr>
+					<tr>
+                        <td>Pizza Fries - Large</td>
+                        <td class="menu-item"><input type="number" value="1" id="quantity-pfl" min="1"></td>
+                        <td>PKR 670/-</td>
+                        <td><button onclick="addToOrder('Pizza Fries - Large', 670, document.getElementById('quantity-pfl').value)">Add to Order</button></td>
                     </tr>
                     <!-- Add more rows for additional fast food items -->
                 </tbody>
             </table>
         </section>
+		
+		<section id="Beverages" class="section">
+    <h2>Beverages</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Beverage</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Cold Drink - (1.5 Ltr)</td>
+                <td class="menu-item"><input type="number" value="1" id="quantity-cd1/2" min="1"></td>
+                <td>PKR 180/-</td>
+                <td><button onclick="addToOrder('Cold Drink - (1.5 Ltr)', 180, document.getElementById('quantity-cd1/2').value)">Add to Order</button></td>
+            </tr>
+			<tr>
+                <td>Cold Drink - (1 Ltr)</td>
+                <td class="menu-item"><input type="number" value="1" id="quantity-cd1" min="1"></td>
+                <td>PKR 220/-</td>
+                <td><button onclick="addToOrder('Cold Drink - (1 Ltr)', 220, document.getElementById('quantity-cd1').value)">Add to Order</button></td>
+            </tr>
+			<tr>
+                <td>Cold Drink - (350ml)</td>
+                <td class="menu-item"><input type="number" value="1" id="quantity-cd1" min="1"></td>
+                <td>PKR 70/-</td>
+                <td><button onclick="addToOrder('Cold Drink - (350ml)', 70, document.getElementById('quantity-cd1').value)">Add to Order</button></td>
+            </tr>
+            <!-- Add more rows for additional beverages -->
+        </tbody>
+    </table>
+</section>
 
         <section id="order" class="section">
             <h2>Your Order</h2>
