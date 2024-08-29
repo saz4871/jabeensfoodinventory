@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location Search Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        #background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1; /* Behind other elements */
+        }
+        #map {
+            height: 500px; /* Adjusted height to make room for the search container */
+            width: 100%;
+            margin-top: 150px; /* Increased margin to move the map down */
+        }
+        #search-container {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: white;
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px; /* Add space between elements */
+            width: 60%; /* Increased width for the container */
+        }
+        #search-box {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%; /* Make the search box fill the container width */
+        }
+        #search-button,
+        #current-location-button,
+        #done-button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
+        }
+        #search-button {
+            background-color: #007bff;
+        }
+        #search-button:hover {
+            background-color: #0056b3;
+        }
+        #current-location-button {
+            background-color: #28a745;
+        }
+        #current-location-button:hover {
+            background-color: #218838;
+        }
+        #done-button {
+            background-color: #6c757d;
+        }
+        #done-button:hover {
+            background-color: #5a6268;
+        }
+        #url-field {
+            width: 100%; /* Adjust width to fill the container */
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f5f5f5;
+            cursor: not-allowed;
+			display: none;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center; /* Center the buttons */
+            gap: 10px; /* Approx. 1 cm gap between buttons */
+            width: 100%; /* Make the button container fill the container width */
+        }
+    </style>
+</head>
+<body>
+    <video id="background-video" autoplay muted loop>
+        <source src="steam.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div id="search-container">
+        <input id="search-box" type="text" placeholder="Enter an address or location">
+        <input id="url-field" type="text" readonly placeholder="Selected location URL will appear here">
+        <div class="button-container">
+            <button id="search-button">Search</button>
+            <button id="current-location-button">Current Location</button>
+            <button id="done-button">Done</button>
+        </div>
+    </div>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script>
+			// Function to save the value to localStorage
+        // Initialize the map with Karachi center and initial zoom
+        const map = L.map('map', {
+            center: [24.8607, 67.0011],
+            zoom: 12,
+            minZoom: 10,
+            maxZoom: 18
+        });
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        const geocoder = L.Control.Geocoder.nominatim();
+        const marker = L.marker([24.8607, 67.0011], { draggable: true }).addTo(map);
+
+        function updateURLField(latLng) {
+            const url = `https://www.google.com/maps?q=${latLng.lat},${latLng.lng}`;
+            document.getElementById('url-field').value = url;
+        }
+
+        function performSearch() {
+            const query = document.getElementById('search-box').value;
+            if (!query) {
+                alert('Please enter a location.');
+                return;
+            }
+
+            geocoder.geocode(query, function(results) {
+                if (results.length === 0) {
+                    alert('Location not found.');
+                    return;
+                }
+
+                const result = results[0];
+                const latLng = result.center;
+
+                map.setView(latLng, 15); // Set the zoom level to 15
+                marker.setLatLng(latLng);
+                updateURLField(latLng);
+            });
+        }
+
+        document.getElementById('search-button').addEventListener('click', performSearch);
+
+        document.getElementById('search-box').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                performSearch();
+            }
+        });
+
+        function handleLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const latLng = L.latLng(position.coords.latitude, position.coords.longitude);
+
+                    map.setView(latLng, 15); // Set the zoom level to 15
+                    marker.setLatLng(latLng);
+                    updateURLField(latLng);
+                }, function() {
+                    alert('Unable to retrieve your location.');
+                });
+            } else {
+                alert('Geolocation is not supported by this browser.');
+            }
+        }
+
+        document.getElementById('current-location-button').addEventListener('click', handleLocation);
+
+        map.on('click', function(e) {
+            const latLng = e.latlng;
+            marker.setLatLng(latLng);
+            updateURLField(latLng);
+        });
+
+        function saveValueToLocalStorage() {
+        var locurl = document.getElementById('url-field').value;
+        localStorage.setItem('url-field', locurl);
+    }
+
+    // Save the value when the 'Done' button is clicked
+    document.getElementById('done-button').addEventListener('click', function() {
+        saveValueToLocalStorage();
+    });
+
+    // Save the value in real-time as the user types
+    document.getElementById('url-field').addEventListener('input', function() {
+        saveValueToLocalStorage();
+    });
+    </script>
+</body>
+</html>
