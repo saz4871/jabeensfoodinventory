@@ -98,6 +98,7 @@ header, nav, .container, footer {
         font-size: 1.2em; /* Adjust the size to your preference */
 		color: #ecf0f1;
         }
+		
         h2 {
             border-bottom: 2px solid rgba(52, 73, 94, 0.8);
             padding-bottom: 10px;
@@ -238,40 +239,119 @@ header, nav, .container, footer {
 		
 
         /* Popup CSS */
-        .popup-overlay {
-            display: none; /* Hidden by default */
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        .popup-box {
-            background-color: #fff;
-            color: #000;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-            max-width: 80%;
-            margin: 0 auto;
-        }
-        .popup-box button {
-            background-color: rgba(44, 62, 80, 0.8);
-            color: #ecf0f1;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-size: 1em;
-            border-radius: 5px;
-        }
-        .popup-box button:hover {
-            background-color: rgba(52, 73, 94, 0.8);
-        }
+    .popup-overlay,
+    .receipt-popup-overlay {
+        display: none; /* Hidden by default */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        overflow-y: auto; /* Enable scrolling within the popup */
+    }
+
+    .popup-box,
+    .receipt-popup-box {
+        background-color: rgba(44, 62, 80, 0.8); /* Match order container color */
+        color: #ecf0f1;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        max-width: 90%; /* Slightly increase the width */
+        width: 90%; /* Ensure consistent width */
+        height: auto; /* Allow height to adjust based on content */
+        max-height: 90%; /* Ensure the popup doesn't exceed the screen height */
+        margin: 0 auto;
+        overflow-y: auto; /* Enable scrolling within the popup */
+    }
+
+    .popup-box button,
+    .receipt-popup-box button {
+        background-color: #000; /* Black background for buttons */
+        color: #ecf0f1;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 1em;
+        border-radius: 5px;
+        margin-right: 10px; /* Space between the two buttons */
+    }
+
+    .popup-box button:hover,
+    .receipt-popup-box button:hover {
+        background-color: #333; /* Dark gray on hover */
+    }
+
+    .receipt-popup-box .location-input {
+        width: calc(100% - 24px);
+        margin-top: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        pointer-events: none;
+    }
+
+    .map-container {
+        width: 100%;
+        height: 500px; /* Increased height for better map visibility */
+        margin-top: 10px;
+    }
+
+    /* Flex container for buttons */
+    .button-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+
+    /* Close Button Styling - Red Color */
+    .close-btn {
+        position: absolute;
+        top: 40px;
+        right: 120px;
+        cursor: pointer;
+        font-size: 35px;
+        color: red;  /* Set the color to red */
+    }
+	.order-table th {
+    background-color: black; /* Set the background color to black */
+    color: white; /* Set the font color to white */
+}
+
+/* Receipt Table Header Styling */
+.receipt-table th {
+    background-color: black; /* Set the background color to black */
+    color: white; /* Set the font color to white */
+}
+
     </style>
+	
+	<!-- New Popup HTML for Order Receipt and Location Selection -->
+<div id="receipt-popup-overlay" class="receipt-popup-overlay">
+    <div class="receipt-popup-box">
+        <!-- Close Button -->
+        <span class="close-btn" onclick="closePopup()">&#10006;</span> <!-- This is the "cross" icon -->
+
+        <div id="receipt-details">
+            <!-- Receipt details will be injected here by JavaScript -->
+        </div>
+        <input type="text" id="uneditableText" class="location-input" placeholder="Your Location URL" readonly>
+        
+        <!-- Flex container for buttons -->
+        <div class="button-container">
+            <button onclick="toggleMap()">Select Location</button>
+            <button onclick="sendOrder()">Send Order</button>
+        </div>
+
+        <!-- Embedded iframe for map.html -->
+        <iframe id="map-frame" class="map-container" src="map.html" style="display: none; border: none; width: 100%; height: 500px;"></iframe>
+    </div>
+</div>
 	<script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
@@ -319,7 +399,31 @@ header, nav, .container, footer {
                 window.location.href = 'y4534ujtg45yhtt546jyty4567yewer576uty76475687yrt347r6786yr55utrhg56uht43t5er46t476jy4y676iyh.html';
             }
         });
+		    function updateUneditableText() {
+        var storedValue = localStorage.getItem('url-field');
+        if (storedValue !== null) {
+            document.getElementById('uneditableText').value = storedValue;
+        }
+    }
+
+    // Update the uneditable text field every second
+    setInterval(updateUneditableText, 1000);
     </script>
+	<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Clear the order variable
+        order = [];
+        updateOrderSummary();
+
+        // Clear the URL field in localStorage
+        localStorage.removeItem('url-field');
+
+        // Also, clear the input field for the location URL
+        document.getElementById('uneditableText').value = '';
+
+        // Optionally, you can clear other fields or variables if needed
+    });
+</script>
 </head>
 <body>
 
@@ -652,103 +756,177 @@ header, nav, .container, footer {
 
     <!-- JavaScript to handle the order and sending the order via WhatsApp -->
     <script>
-	document.addEventListener('keydown', function(event) {
-            if (event.ctrlKey && event.altKey && event.code === 'KeyL') {
-                window.location.href = 'password.html';
-            }
-        });
-        const DELIVERY_CHARGE = 200; // Define the delivery charge
-
-        let order = [];
-        let receiptNumber = parseInt(localStorage.getItem('receiptNumber')) || 1;
-
-        function addToOrder(item, price, quantity) {
-            const existingItem = order.find(orderItem => orderItem.item === item);
-            if (existingItem) {
-                existingItem.quantity += parseInt(quantity);
-                existingItem.totalPrice += price * quantity;
-            } else {
-                order.push({ item, price, quantity: parseInt(quantity), totalPrice: price * quantity });
-            }
-            updateOrderSummary();
+    document.addEventListener('keydown', function(event) {
+        if (event.ctrlKey && event.altKey && event.code === 'KeyL') {
+            window.location.href = 'password.html';
         }
+    });
 
-        function removeFromOrder(index) {
-            order.splice(index, 1);
-            updateOrderSummary();
+    const DELIVERY_CHARGE = 200; // Define the delivery charge
+
+    let order = [];
+    let receiptNumber = parseInt(localStorage.getItem('receiptNumber')) || 1;
+
+    function addToOrder(item, price, quantity) {
+        const existingItem = order.find(orderItem => orderItem.item === item);
+        if (existingItem) {
+            existingItem.quantity += parseInt(quantity);
+            existingItem.totalPrice += price * quantity;
+        } else {
+            order.push({ item, price, quantity: parseInt(quantity), totalPrice: price * quantity });
         }
+        updateOrderSummary();
+    }
 
-        function updateOrderSummary() {
-            const orderSummary = document.getElementById('order-summary');
-            orderSummary.innerHTML = '';
+    function removeFromOrder(index) {
+        order.splice(index, 1);
+        updateOrderSummary();
+    }
 
-            if (order.length === 0) {
-                orderSummary.innerHTML = '<p>No items in your order yet.</p>';
-                return;
-            }
+    function updateOrderSummary() {
+    const orderSummary = document.getElementById('order-summary');
+    orderSummary.innerHTML = '';
 
-            let total = 0;
-            order.forEach((orderItem, index) => {
-                total += orderItem.totalPrice;
-                const p = document.createElement('p');
-                p.textContent = `${orderItem.item} x${orderItem.quantity} - PKR ${orderItem.totalPrice}`;
-                const removeButton = document.createElement('button');
-                removeButton.textContent = 'Remove';
-                removeButton.style.marginLeft = '10px';
-                removeButton.onclick = () => removeFromOrder(index);
-                p.appendChild(removeButton);
-                orderSummary.appendChild(p);
-            });
+    if (order.length === 0) {
+        orderSummary.innerHTML = '<p>No items in your order yet.</p>';
+        return;
+    }
 
-            const deliveryChargeElement = document.createElement('p');
-            deliveryChargeElement.textContent = `Delivery Charge: PKR ${DELIVERY_CHARGE}`;
-            orderSummary.appendChild(deliveryChargeElement);
+    // Create table
+    const table = document.createElement('table');
+    const headerRow = document.createElement('tr');
 
-            const totalElement = document.createElement('p');
-            totalElement.textContent = `Total: PKR ${total + DELIVERY_CHARGE}`;
-            orderSummary.appendChild(totalElement);
+    // Create headers
+    ['Item', 'Quantity', 'Price', 'Action'].forEach(text => {
+        const th = document.createElement('th');
+        th.textContent = text;
+        headerRow.appendChild(th);
+    });
+    table.appendChild(headerRow);
+
+    let total = 0;
+
+    // Create rows for each order item
+    order.forEach((orderItem, index) => {
+        const row = document.createElement('tr');
+
+        // Item
+        const itemCell = document.createElement('td');
+        itemCell.textContent = orderItem.item;
+        row.appendChild(itemCell);
+
+        // Quantity
+        const quantityCell = document.createElement('td');
+        quantityCell.textContent = orderItem.quantity;
+        row.appendChild(quantityCell);
+
+        // Price
+        const priceCell = document.createElement('td');
+        priceCell.textContent = `PKR ${orderItem.totalPrice}`;
+        row.appendChild(priceCell);
+
+        // Action (Remove button)
+        const actionCell = document.createElement('td');
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Remove';
+        removeButton.onclick = () => removeFromOrder(index);
+        actionCell.appendChild(removeButton);
+        row.appendChild(actionCell);
+
+        table.appendChild(row);
+
+        total += orderItem.totalPrice;
+    });
+
+    // Add delivery charge and total rows
+    const deliveryChargeRow = document.createElement('tr');
+    deliveryChargeRow.innerHTML = `<td colspan="2">Delivery Charge</td><td colspan="2">PKR ${DELIVERY_CHARGE}</td>`;
+    table.appendChild(deliveryChargeRow);
+
+    const totalRow = document.createElement('tr');
+    totalRow.innerHTML = `<td colspan="2">Total</td><td colspan="2">PKR ${total + DELIVERY_CHARGE}</td>`;
+    table.appendChild(totalRow);
+
+    orderSummary.appendChild(table);
+}
+
+    function confirmOrder() {
+    if (order.length === 0) {
+        document.getElementById('error-message').style.display = 'block';
+        return;
+    }
+
+    document.getElementById('error-message').style.display = 'none';
+
+    let receiptContent = `<h3>Receipt Number: ${receiptNumber}</h3><h4>Order Details:</h4>`;
+    receiptContent += `<table><tr><th>Item</th><th>Quantity</th><th>Price</th></tr>`;
+
+    order.forEach(orderItem => {
+        receiptContent += `<tr><td>${orderItem.item}</td><td>${orderItem.quantity}</td><td>PKR ${orderItem.totalPrice}</td></tr>`;
+    });
+
+    receiptContent += `<tr><td colspan="2">Delivery Charge</td><td>PKR ${DELIVERY_CHARGE}</td></tr>`;
+    receiptContent += `<tr><td colspan="2">Total</td><td>PKR ${order.reduce((sum, item) => sum + item.totalPrice, 0) + DELIVERY_CHARGE}</td></tr>`;
+    receiptContent += `</table>`;
+
+    document.getElementById('receipt-details').innerHTML = receiptContent;
+    document.getElementById('receipt-popup-overlay').style.display = 'flex';
+}
+
+    function toggleMap() {
+        const mapFrame = document.getElementById('map-frame');
+        // Toggle the display of the map iframe
+        mapFrame.style.display = (mapFrame.style.display === 'none' || mapFrame.style.display === '') ? 'block' : 'none';
+    }
+
+    // Listen for the message event to get the location URL from map.html
+    window.addEventListener('message', function(event) {
+        // Ensure the message comes from the same origin
+        if (event.origin === window.location.origin) {
+            // Auto-paste the received location URL into the text field
+            document.getElementById('location-url').value = event.data;
         }
+    });
+	
+	function closePopup() {
+    document.getElementById('receipt-popup-overlay').style.display = 'none';
+}
 
-        function confirmOrder() {
-            if (order.length === 0) {
-                document.getElementById('error-message').style.display = 'block';
-                return;
-            }
+    function sendOrder() {
+    const locationUrl = document.getElementById('uneditableText').value;
 
-            document.getElementById('error-message').style.display = 'none';
+    if (!locationUrl) {
+        alert('Please select a location.');
+        return;
+    }
 
-            let message = `Receipt Number: ${receiptNumber}\n\nOrder Details:\n\n`;
+    let message = `Receipt Number: ${receiptNumber}\n\nOrder Details:\n\n`;
 
-            order.forEach(orderItem => {
-                message += `${orderItem.item} x${orderItem.quantity} - PKR ${orderItem.totalPrice}\n`;
-            });
+    order.forEach(orderItem => {
+        message += `${orderItem.item} x${orderItem.quantity} - PKR ${orderItem.totalPrice}\n`;
+    });
 
-            message += `\nDelivery Charge: PKR ${DELIVERY_CHARGE}\n`;
-            message += `Total: PKR ${order.reduce((sum, item) => sum + item.totalPrice, 0) + DELIVERY_CHARGE}`;
-            
-            // Open WhatsApp with the order details
-            const phoneNumber = "+923221039533"; // Replace with your phone number
-            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-            window.open(whatsappURL, '_blank');
+    message += `\nDelivery Charge: PKR ${DELIVERY_CHARGE}\n`;
+    message += `Total: PKR ${order.reduce((sum, item) => sum + item.totalPrice, 0) + DELIVERY_CHARGE}\n`;
+    message += `Location: ${locationUrl}`;
 
-            // Increment the receipt number for the next order and save it in local storage
-            receiptNumber++;
-            localStorage.setItem('receiptNumber', receiptNumber);
+    const phoneNumber = "+923221039533"; // Replace with your phone number
+    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappURL, '_blank');
 
-            // Clear the current order
-            order = [];
-            updateOrderSummary();
-        }
+    // Increment the receipt number for the next order and save it in local storage
+    receiptNumber++;
+    localStorage.setItem('receiptNumber', receiptNumber);
 
-        function closePopup() {
-            document.getElementById('popup-overlay').style.display = 'none';
-        }
+    // Clear the current order
+    order = [];
+    updateOrderSummary();
 
-        // Show the popup when the page loads
-        window.onload = function() {
-            document.getElementById('popup-overlay').style.display = 'flex';
-        }
-    </script>
+    // Close the popup
+    closePopup();
+}
+</script>
+
     
 </body>
 </html>
