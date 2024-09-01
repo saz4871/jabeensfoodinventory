@@ -256,6 +256,7 @@ header, nav, .container, footer {
 
     .popup-box,
     .receipt-popup-box {
+        position: relative; /* Set the container position to relative */
         background-color: rgba(44, 62, 80, 0.8); /* Match order container color */
         color: #ecf0f1;
         padding: 20px;
@@ -269,6 +270,18 @@ header, nav, .container, footer {
         overflow-y: auto; /* Enable scrolling within the popup */
     }
 
+    /* Updated Close Button Styling */
+    .close-btn {
+        position: absolute; /* Fix the position relative to the container */
+        top: 10px; /* Adjust as needed to position correctly */
+        right: 10px; /* Adjust as needed to position correctly */
+        cursor: pointer;
+        font-size: 35px;
+        color: red; /* Set the color to red */
+        z-index: 1100; /* Ensure it's above other content */
+    }
+
+    /* Additional styles for buttons and content within the popup */
     .popup-box button,
     .receipt-popup-box button {
         background-color: #000; /* Black background for buttons */
@@ -308,16 +321,6 @@ header, nav, .container, footer {
         margin-top: 20px;
     }
 
-
-    /* Close Button Styling - Red Color */
-    .close-btn {
-        position: absolute;
-        top: 40px;
-        right: 120px;
-        cursor: pointer;
-        font-size: 35px;
-        color: red;  /* Set the color to red */
-    }
 	.order-table th {
     background-color: black; /* Set the background color to black */
     color: white; /* Set the font color to white */
@@ -328,7 +331,88 @@ header, nav, .container, footer {
     background-color: black; /* Set the background color to black */
     color: white; /* Set the font color to white */
 }
+#home h2 {
+        font-size: 2em; /* Adjust font size for the welcome heading */
+    }
 
+    #home p {
+        font-size: 1.2em; /* Adjust font size for the welcome paragraph */
+    }
+	#payment h2 {
+        font-size: 2em; /* Adjust font size for the payment heading */
+    }
+
+    #payment p {
+        font-size: 1.2em; /* Adjust font size for the payment paragraph */
+    }
+
+    /* Increase font size for Contact section */
+    #contact h2 {
+        font-size: 2em; /* Adjust font size for the contact heading */
+    }
+
+    #contact p {
+        font-size: 1.2em; /* Adjust font size for the contact paragraphs */
+    }
+	#order h2 {
+        font-size: 2em; /* Adjust font size for the order heading */
+    }
+
+    #order .order-summary,
+    #order .order-summary p {
+        font-size: 1.2em; /* Adjust font size for the order summary text */
+    }
+
+    #order .confirmation-options button {
+        font-size: 1.2em; /* Adjust font size for buttons in the order section */
+    }
+
+    #order .error-message {
+        font-size: 1.2em; /* Adjust font size for the error message */
+    }
+#desi-menu td,
+    #fast-food td,
+    #Beverages td {
+        font-size: 1.5em; /* Adjust font size as needed */
+    }
+#order .order-summary button {
+        background-color: white; /* Set background color to white */
+        color: black; /* Set font color to black */
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: 5px; /* Optional: add border radius for styling */
+    }
+
+    #order .order-summary button:hover {
+        background-color: #e0e0e0; /* Light gray on hover */
+    }
+	/* Font size for receipt content in the popup */
+    .receipt-popup-box h3,
+    .receipt-popup-box h4,
+    .receipt-popup-box table,
+    .receipt-popup-box p {
+        font-size: 1.2em; /* Adjust font size for the receipt popup content */
+    }
+
+    /* Optional: Style the table within the receipt for better readability */
+    .receipt-popup-box table {
+        width: 100%;
+        margin: 20px 0;
+        border-collapse: collapse;
+    }
+
+    .receipt-popup-box th,
+    .receipt-popup-box td {
+        padding: 10px;
+        border: 1px solid #ecf0f1;
+        text-align: center;
+    }
+
+    .receipt-popup-box th {
+        background-color: #333;
+        color: #ecf0f1;
+    }
     </style>
 	
 	<!-- New Popup HTML for Order Receipt and Location Selection -->
@@ -340,12 +424,12 @@ header, nav, .container, footer {
         <div id="receipt-details">
             <!-- Receipt details will be injected here by JavaScript -->
         </div>
-        <input type="text" id="uneditableText" class="location-input" placeholder="Click on Select Location button for your Location Selection" readonly>
+        <input type="text" id="uneditableText" class="location-input" placeholder="Your Location URL" readonly>
         
         <!-- Flex container for buttons -->
         <div class="button-container">
             <button onclick="toggleMap()">Select Location</button>
-            <button onclick="sendOrder()">Proceed For Payment</button>
+            <button onclick="sendOrder()">Proceed to Payment</button>
         </div>
 
         <!-- Embedded iframe for map.html -->
