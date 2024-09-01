@@ -332,7 +332,7 @@ header, nav, .container, footer {
     color: white; /* Set the font color to white */
 }
 #home h2 {
-        font-size: 1.5em; /* Adjust font size for the welcome heading */
+        font-size: 2em; /* Adjust font size for the welcome heading */
     }
 
     #home p {
@@ -412,6 +412,28 @@ header, nav, .container, footer {
     .receipt-popup-box th {
         background-color: #333;
         color: #ecf0f1;
+    }
+	nav {
+        display: flex;
+        justify-content: center;
+        background-color: rgba(52, 73, 94, 0.8);
+        padding: 20px; /* Increase padding for larger button area */
+        margin-bottom: 20px; /* Optional: add margin for spacing */
+    }
+
+    nav a {
+        color: #ecf0f1;
+        padding: 20px 30px; /* Increase padding for larger button size */
+        text-decoration: none;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 1.5em; /* Increase font size for button text */
+        border-radius: 5px; /* Optional: add border radius for styling */
+        font-family: 'Arial', sans-serif; /* Set font family for button text */
+    }
+
+    nav a:hover {
+        background-color: rgba(44, 62, 80, 0.8);
     }
     </style>
 	
@@ -518,13 +540,6 @@ header, nav, .container, footer {
             Your browser does not support the video tag.
         </video>
     </div>
-    <!-- Popup HTML -->
-    <div id="popup-overlay" class="popup-overlay">
-        <div class="popup-box">
-            <p>Please co-operate with our rider by providing location when asked to let them provide your food on your door-step.</p>
-            <button onclick="closePopup()">OK</button>
-        </div>
-    </div>
 
     <header>
         <img src="newlogo.png" alt="Logo" class="logo">
@@ -542,7 +557,7 @@ header, nav, .container, footer {
 
     <div class="container">
         <section id="home" class="section">
-            <h2>Welcome to JABEEN's FOOD INVENTORY</h2>
+            <h2>Welcome to JFI</h2>
             <p>Your one-stop destination for delicious home-cooked meals. We offer a variety of dishes made with love and the freshest ingredients. Explore our menu and place your order today!</p>
         </section>
 
