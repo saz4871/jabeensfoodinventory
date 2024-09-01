@@ -202,5 +202,39 @@
         saveValueToLocalStorage();
     });
     </script>
+	<script>
+    // Disable right-click
+    document.addEventListener('contextmenu', function(event) {
+        event.preventDefault();
+    });
+
+    // Disable common inspect element keyboard shortcuts
+    document.addEventListener('keydown', function(event) {
+        // F12 key
+        if (event.keyCode === 123) {
+            event.preventDefault();
+        }
+
+        // Ctrl+Shift+I
+        if (event.ctrlKey && event.shiftKey && event.keyCode === 73) {
+            event.preventDefault();
+        }
+
+        // Ctrl+Shift+J
+        if (event.ctrlKey && event.shiftKey && event.keyCode === 74) {
+            event.preventDefault();
+        }
+
+        // Ctrl+U
+        if (event.ctrlKey && event.keyCode === 85) {
+            event.preventDefault();
+        }
+
+        // Ctrl+Shift+C (DevTools element picker)
+        if (event.ctrlKey && event.shiftKey && event.keyCode === 67) {
+            event.preventDefault();
+        }
+    });
+</script>
 </body>
 </html>
