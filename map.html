@@ -43,10 +43,14 @@
             width: 60%; /* Increased width for the container */
         }
         #search-box {
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            width: 100%; /* Make the search box fill the container width */
+            width: calc(100% - 24px);
+        margin-top: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        pointer-events: editable;
+        font-size: 1.5em; /* Increase font size for the uneditable text field */
+        color: #333; /* Optional: adjust text color */
         }
         #search-button,
         #current-location-button,
@@ -59,18 +63,24 @@
         }
         #search-button {
             background-color: #007bff;
+			font-size: 1.5em;
+			padding: 10px 20px;
         }
         #search-button:hover {
             background-color: #0056b3;
         }
         #current-location-button {
             background-color: #28a745;
+			font-size: 1.5em;
+			padding: 10px 20px;
         }
         #current-location-button:hover {
             background-color: #218838;
         }
         #done-button {
             background-color: #6c757d;
+			font-size: 1.5em;
+			padding: 10px 20px;
         }
         #done-button:hover {
             background-color: #5a6268;
@@ -90,6 +100,7 @@
             gap: 10px; /* Approx. 1 cm gap between buttons */
             width: 100%; /* Make the button container fill the container width */
         }
+		
     </style>
 </head>
 <body>
