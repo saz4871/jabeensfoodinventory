@@ -6,86 +6,94 @@
     <title>Password Protected Action</title>
     <style>
         html, body {
-            height: 100%;
-            margin: 0;
-            overflow: hidden; /* Prevent scrolling */
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #000;
-        }
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+}
 
-        .video-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
+.video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
 
-        .video-background video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            transform: translate(-50%, -50%);
-            object-fit: cover;
-        }
+.video-background video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+}
 
-        .container {
-            background: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-            color: #fff;
-            position: relative; /* Positioning context for absolute children */
-            max-width: 400px; /* Optional: to limit container width */
-            width: 100%;
-            box-sizing: border-box;
-        }
+.container {
+    background: rgba(0, 0, 0, 0); /* Fully transparent background */
+    padding: 40px;
+    border-radius: 12px;
+    text-align: center;
+    color: #fff;
+    position: relative;
+    max-width: 500px;
+    width: 100%;
+    box-sizing: border-box;
+}
 
-        input[type="password"] {
-            padding: 10px;
-            font-size: 1em;
-            margin-bottom: 20px;
-            width: 100%;
-            box-sizing: border-box;
-        }
 
-        button {
-            padding: 10px 20px;
-            font-size: 1em;
-            margin: 10px;
-            cursor: pointer;
-        }
+input[type="password"] {
+    padding: 15px; /* Increase padding */
+    font-size: 1.5em; /* Increase font size */
+    margin-bottom: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
 
-        #openButton {
-            background-color: #2ecc71; /* Green */
-            color: white;
-            border: none;
-        }
+button {
+    padding: 15px 30px; /* Increase padding */
+    font-size: 1.5em; /* Increase font size */
+    margin: 15px; /* Increase margin */
+    cursor: pointer;
+}
 
-        #closeButton {
-            background-color: #e74c3c; /* Red */
-            color: white;
-            border: none;
-        }
+#openButton {
+    background-color: #2ecc71; /* Green */
+    color: white;
+    border: none;
+}
 
-        #exitButton {
-            background-color: #3498db; /* Blue */
-            color: white;
-            border: none;
-            position: absolute;
-            bottom: -50px; /* Distance from bottom of container */
-            left: 47.5%;
-            transform: translateX(-50%);
-        }
+#closeButton {
+    background-color: #e74c3c; /* Red */
+    color: white;
+    border: none;
+}
+
+#exitButton {
+    background-color: #3498db; /* Blue */
+    color: white;
+    border: none;
+    position: absolute;
+    bottom: -50px;
+    left: 46.5%;
+    transform: translateX(-50%);
+}
+
+#statusMessage {
+    font-size: 1.8em; /* Increase font size for the status message */
+    margin-top: 20px; /* Add some space above the status message */
+    color: #ffcc00; /* Optional: Change the color to yellow for visibility */
+}
+
     </style>
     <script>
         // Disable right-click
